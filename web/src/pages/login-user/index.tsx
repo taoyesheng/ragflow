@@ -4,7 +4,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon, useNavigate } from 'umi';
-import RightPanel from './right-panel';
+import RightPanel from '../login/right-panel';
 
 import { Domain } from '@/constants/common';
 import authorizationUtil from '@/utils/authorization-util';
@@ -28,6 +28,8 @@ const Login = () => {
   }, [form]);
 
   const onCheck = async () => {
+    console.log(localStorage.getItem('userType'));
+
     try {
       const params = await form.validateFields();
 
@@ -40,9 +42,9 @@ const Login = () => {
         });
         if (code === 0) {
           navigate('/knowledge');
-          // todo 临时修改 增加管理员用户权限
+          // todo 临时修改 增加普通用户权限
           authorizationUtil.setItems({
-            userType: 'adminUser',
+            userType: 'user',
           });
         }
       } else {
@@ -123,24 +125,24 @@ const Login = () => {
                 <Checkbox> {t('rememberMe')}</Checkbox>
               </Form.Item>
             )}
-            <div>
-              {title === 'login' && (
-                <div>
-                  {t('signInTip')}
-                  <Button type="link" onClick={changeTitle}>
-                    {t('signUp')}
-                  </Button>
-                </div>
-              )}
-              {title === 'register' && (
-                <div>
-                  {t('signUpTip')}
-                  <Button type="link" onClick={changeTitle}>
-                    {t('login')}
-                  </Button>
-                </div>
-              )}
-            </div>
+            {/*<div>*/}
+            {/*  {title === 'login' && (*/}
+            {/*    <div>*/}
+            {/*      {t('signInTip')}*/}
+            {/*      <Button type="link" onClick={changeTitle}>*/}
+            {/*        {t('signUp')}*/}
+            {/*      </Button>*/}
+            {/*    </div>*/}
+            {/*  )}*/}
+            {/*  {title === 'register' && (*/}
+            {/*    <div>*/}
+            {/*      {t('signUpTip')}*/}
+            {/*      <Button type="link" onClick={changeTitle}>*/}
+            {/*        {t('login')}*/}
+            {/*      </Button>*/}
+            {/*    </div>*/}
+            {/*  )}*/}
+            {/*</div>*/}
             <Button
               type="primary"
               block

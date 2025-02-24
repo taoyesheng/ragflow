@@ -30,6 +30,11 @@ const routes = [
     layout: false,
   },
   {
+    path: '/login-user',
+    component: '@/pages/login-user',
+    layout: false,
+  },
+  {
     path: '/login-next',
     component: '@/pages/login-next',
     layout: false,

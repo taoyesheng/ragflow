@@ -14,26 +14,43 @@ import { useTheme } from '@/components/theme-provider';
 import styles from './index.less';
 
 const { Header } = Layout;
-
 const RagHeader = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-  const navigate = useNavigateWithFromState();
-  const { pathname } = useLocation();
   const { t } = useTranslate('header');
-  const appConf = useFetchAppConf();
-  const { theme: themeRag } = useTheme();
-  const tagsData = useMemo(
-    () => [
+
+  // todo 临时增加用户权限划分
+  let userType: string = localStorage.getItem('userType') || 'adminUser';
+
+  interface obj {
+    path: string;
+    name: string;
+    icon: any;
+  }
+
+  let tabList: obj[] = [];
+  if (userType === 'user') {
+    tabList = [
+      { path: '/chat', name: t('chat'), icon: MessageOutlined },
+      { path: '/search', name: t('search'), icon: SearchOutlined },
+    ];
+  } else {
+    tabList = [
       { path: '/knowledge', name: t('knowledgeBase'), icon: KnowledgeBaseIcon },
       { path: '/chat', name: t('chat'), icon: MessageOutlined },
       { path: '/search', name: t('search'), icon: SearchOutlined },
       { path: '/flow', name: t('flow'), icon: GraphIcon },
       { path: '/file', name: t('fileManager'), icon: FileIcon },
-    ],
-    [t],
-  );
+    ];
+  }
+  // end
+
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+  const navigate = useNavigateWithFromState();
+  const { pathname } = useLocation();
+  const appConf = useFetchAppConf();
+  const { theme: themeRag } = useTheme();
+  const tagsData = useMemo(() => tabList, [t]);
 
   const currentPath = useMemo(() => {
     return (

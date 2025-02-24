@@ -60,9 +60,9 @@ const RightToolBar = () => {
             <DownOutlined />
           </Space>
         </Dropdown>
-        <Circle>
-          <GithubOutlined onClick={handleGithubCLick} />
-        </Circle>
+        {/*<Circle>*/}
+        {/*  <GithubOutlined onClick={handleGithubCLick} />*/}
+        {/*</Circle>*/}
         <Circle>
           {theme === 'dark' ? (
             <MoonIcon onClick={onMoonClick} size={20} />
