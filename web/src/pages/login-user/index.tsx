@@ -41,7 +41,7 @@ const Login = () => {
           password: rsaPassWord,
         });
         if (code === 0) {
-          navigate('/knowledge');
+          navigate('/chat');
           // todo 临时修改 增加普通用户权限
           authorizationUtil.setItems({
             userType: 'user',

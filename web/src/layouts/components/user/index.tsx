@@ -9,11 +9,6 @@ const App: React.FC = () => {
   const { data: userInfo } = useFetchUserInfo();
 
   const toSetting = () => {
-    // todo 临时增加用户权限划分 普通用户禁止查看
-    let userType: string = localStorage.getItem('userType') || 'adminUser';
-    if (userType === 'user') return;
-    // end
-
     history.push('/user-setting');
   };
 

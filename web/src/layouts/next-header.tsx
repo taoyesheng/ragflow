@@ -24,20 +24,38 @@ import { useLocation } from 'umi';
 
 export function Header() {
   const { t } = useTranslate('header');
-  const { pathname } = useLocation();
-  const navigate = useNavigateWithFromState();
-  const { navigateToHome, navigateToProfile } = useNavigatePage();
 
-  const tagsData = useMemo(
-    () => [
+  // todo 临时增加用户权限划分
+  let userType: string = localStorage.getItem('userType') || 'adminUser';
+
+  interface obj {
+    path: string;
+    name: string;
+    icon: any;
+  }
+
+  let tabList: obj[] = [];
+  if (userType === 'user') {
+    tabList = [
+      { path: Routes.Chats, name: t('chat'), icon: MessageSquareText },
+      { path: Routes.Searches, name: t('search'), icon: Search },
+    ];
+  } else {
+    tabList = [
       { path: Routes.Datasets, name: t('knowledgeBase'), icon: Library },
       { path: Routes.Chats, name: t('chat'), icon: MessageSquareText },
       { path: Routes.Searches, name: t('search'), icon: Search },
       { path: Routes.Agents, name: t('flow'), icon: Cpu },
       { path: Routes.Files, name: t('fileManager'), icon: File },
-    ],
-    [t],
-  );
+    ];
+  }
+  // end
+
+  const { pathname } = useLocation();
+  const navigate = useNavigateWithFromState();
+  const { navigateToHome, navigateToProfile } = useNavigatePage();
+
+  const tagsData = useMemo(() => tabList, [t]);
 
   const options = useMemo(() => {
     return tagsData.map((tag) => {
@@ -75,7 +93,7 @@ export function Header() {
     <section className="py-6 px-10 flex justify-between items-center border-b">
       <div className="flex items-center gap-4">
         <img
-          src={'/logo.svg'}
+          src={'/logo.jpg'}
           alt="logo"
           className="w-[100] h-[100] mr-[12]"
           onClick={handleLogoClick}

@@ -89,7 +89,13 @@ export const useLogout = () => {
       if (data.code === 0) {
         message.success(t('message.logout'));
         authorizationUtil.removeAll();
-        history.push('/login');
+        // todo 临时跳转登录页
+        let userType: string = localStorage.getItem('userType') || 'adminUser';
+        if (userType === 'user') {
+          history.push('/login-user');
+        } else {
+          history.push('/login');
+        }
       }
       return data.code;
     },

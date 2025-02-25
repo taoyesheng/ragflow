@@ -82,13 +82,15 @@ const RagHeader = () => {
         height: '72px',
       }}
     >
-      <a href={window.location.origin}>
+      {/*<a href={window.location.origin}>*/}
+      <a>
         <Space
           size={12}
-          onClick={handleLogoClick}
+          // todo 临时移除
+          // onClick={handleLogoClick}
           className={styles.logoWrapper}
         >
-          <img src="/logo.svg" alt="" className={styles.appIcon} />
+          <img src="/logo.jpg" alt="" className={styles.appIcon} />
           <span className={styles.appName}>{appConf.appName}</span>
         </Space>
       </a>
