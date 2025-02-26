@@ -7,11 +7,41 @@ import type { MenuProps } from 'antd';
 import { Flex, Menu } from 'antd';
 import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'umi';
-import {
-  UserSettingBaseKey,
-  UserSettingIconMap,
-  UserSettingRouteKey,
-} from '../constants';
+import { UserSettingBaseKey, UserSettingIconMap } from '../constants';
+
+// todo 临时增加角色
+let userType: string = localStorage.getItem('userType') || 'adminUser';
+
+interface pages {
+  Profile: string;
+  Password?: string | undefined;
+  Model?: string | undefined;
+  System?: string | undefined;
+  Api?: string | undefined;
+  Team: string;
+  Logout: string;
+}
+
+let UserSettingRouteKey: pages;
+if (userType === 'user') {
+  UserSettingRouteKey = {
+    Profile: 'profile',
+    Team: 'team',
+    Logout: 'logout',
+  };
+} else {
+  UserSettingRouteKey = {
+    Profile: 'profile',
+    Password: 'password',
+    Model: 'model',
+    System: 'system',
+    Api: 'api',
+    Team: 'team',
+    Logout: 'logout',
+  };
+}
+// end
+
 import styles from './index.less';
 
 type MenuItem = Required<MenuProps>['items'][number];
