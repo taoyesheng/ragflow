@@ -233,20 +233,24 @@ const Chat = () => {
 
   // todo 临时增加角色
   let userType: boolean =
-    (localStorage.getItem('userType') || 'adminUser') === 'user';
+    (localStorage.getItem('userType') || 'adminUser') !== 'user';
   // end
 
   return (
     <Flex className={styles.chatWrapper}>
-      <Flex
-        style={{ display: userType ? 'none' : '' }}
-        className={styles.chatAppWrapper}
-      >
+      <Flex className={styles.chatAppWrapper}>
         <Flex flex={1} vertical>
-          <Button type="primary" onClick={handleShowChatConfigurationModal()}>
-            {t('createAssistant')}
-          </Button>
-          <Divider></Divider>
+          {userType && (
+            <>
+              <Button
+                type="primary"
+                onClick={handleShowChatConfigurationModal()}
+              >
+                {t('createAssistant')}
+              </Button>
+              <Divider></Divider>
+            </>
+          )}
           <Flex className={styles.chatAppContent} vertical gap={10}>
             <Spin spinning={dialogLoading} wrapperClassName={styles.chatSpin}>
               {dialogList.map((x) => (
