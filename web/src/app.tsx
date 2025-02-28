@@ -2,11 +2,11 @@ import i18n from '@/locales/config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { App, ConfigProvider, ConfigProviderProps, theme } from 'antd';
+import pt_BR from 'antd/lib/locale/pt_BR';
 import enUS from 'antd/locale/en_US';
 import vi_VN from 'antd/locale/vi_VN';
 import zhCN from 'antd/locale/zh_CN';
 import zh_HK from 'antd/locale/zh_HK';
-import pt_BR from 'antd/lib/locale/pt_BR';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -46,6 +46,7 @@ function Root({ children }: React.PropsWithChildren) {
   const [locale, setLocal] = useState<Locale>(getLocale(storage.getLanguage()));
 
   i18n.on('languageChanged', function (lng: string) {
+    console.log('===', lng);
     storage.setLanguage(lng);
     setLocal(getLocale(lng));
   });
@@ -76,7 +77,9 @@ const RootProvider = ({ children }: React.PropsWithChildren) => {
     // Because the language is saved in the backend, a token is required to obtain the api. However, the login page cannot obtain the language through the getUserInfo api, so the language needs to be saved in localstorage.
     const lng = storage.getLanguage();
     if (lng) {
-      i18n.changeLanguage(lng);
+      // i18n.changeLanguage(lng);
+      // todo 临时强制为中文
+      i18n.changeLanguage('zh');
     }
   }, []);
 
@@ -90,6 +93,7 @@ const RootProvider = ({ children }: React.PropsWithChildren) => {
     </TooltipProvider>
   );
 };
+
 export function rootContainer(container: ReactNode) {
   return <RootProvider>{container}</RootProvider>;
 }
